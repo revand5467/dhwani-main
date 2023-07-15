@@ -50,6 +50,7 @@ dependencies:
   learning_translate: ^0.0.4
   flutter_translate: ^4.0.3
   string_similarity: ^2.0.0
+  switcher_button: ^0.0.4
 
   translator: ^0.1.7
 
@@ -78,6 +79,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/PNG/
+    - assets/into/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -91,10 +93,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+     - family: ArchivoBlack
+       fonts:
+         - asset: assets/fonts/ArchivoBlack-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

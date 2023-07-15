@@ -7,6 +7,7 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:string_similarity/string_similarity.dart';
+import 'package:switcher_button/switcher_button.dart';
 import 'package:translator/translator.dart';
 import 'package:dhwani/screens/search.dart';
 import 'package:dhwani/screens/bottom_bar.dart';
@@ -135,10 +136,11 @@ class _SpeechState extends State<Speech> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF130C2E),
       appBar: AppBar(
         title: const Text(
           'Voice Assist',
-          style: TextStyle(fontSize: 22, color: Colors.black),
+          style: TextStyle(fontSize: 22, color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -165,7 +167,7 @@ class _SpeechState extends State<Speech> {
               words: _highlights,
               textStyle: const TextStyle(
                 fontSize: 25.0,
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -178,37 +180,19 @@ class _SpeechState extends State<Speech> {
                       const Text(
                         'MALAYALAM',
                         style: TextStyle(
+                          color: Colors.white,
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(width: 10.0),
-                      Ink(
-                        height: 26.0,
-                        width: 40.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25.0),
-                          color: _isOn ? Colors.green : Colors.red,
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              _isOn = !_isOn;
-                            });
-                          },
-                          borderRadius: BorderRadius.circular(25.0),
-                          child: Center(
-                            child: Text(
-                              _isOn ? 'ON' : 'OFF',
-                              style: const TextStyle(
-                                fontSize: 13.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      SwitcherButton(
+                        onChange: (value){
+                          setState(() {
+                            _isOn = !_isOn;
+                          });
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -232,7 +216,7 @@ class _SpeechState extends State<Speech> {
                       padding: EdgeInsets.all(20.0),
                       child: Text(
                         'No Matches Found.',
-                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
                   ),
@@ -243,7 +227,7 @@ class _SpeechState extends State<Speech> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFF673D80),
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -260,10 +244,10 @@ class _SpeechState extends State<Speech> {
               hoverColor: Colors.grey[100]!,
               gap: 8,
               activeColor: Colors.black,
-              iconSize: 24,
+              iconSize: 30,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
+              tabBackgroundColor: const Color(0xFFF3D6F5),
               color: Colors.black,
               tabs: [
                 GButton(

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:string_similarity/string_similarity.dart';
+import 'package:switcher_button/switcher_button.dart';
 import '../models/tile_model.dart';
 import '../controller/bottom_bar.dart';
 import '../widgets/tile_wid.dart';
@@ -37,11 +38,12 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF130C2E),
       appBar: AppBar(
         title: const Text(
             'Search',
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
             ),
         ),
         backgroundColor: Colors.transparent,
@@ -60,11 +62,21 @@ class _SearchState extends State<Search> {
                         searchValue = value;
                       });
                     },
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Search...',
-                      prefixIcon: Icon(Icons.search),
+                      hintStyle: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      prefixIcon: const Icon(Icons.search),
+                      filled: true,
+                      fillColor: const Color(0xFFF3D6F5), // Set the background color
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide.none, // Remove the border
+                      ),
                     ),
                   ),
+
                 ),
               ],
             ),
@@ -77,37 +89,19 @@ class _SearchState extends State<Search> {
                 const Text(
                   'MALAYALAM',
                   style: TextStyle(
+                    color: Colors.white,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(width: 10.0),
-                Ink(
-                  height: 26.0,
-                  width: 40.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.0),
-                    color: _isOn ? Colors.green : Colors.red,
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        _isOn = !_isOn;
-                      });
-                    },
-                    borderRadius: BorderRadius.circular(25.0),
-                    child: Center(
-                      child: Text(
-                        _isOn ? 'ON' : 'OFF',
-                        style: const TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                SwitcherButton(
+                  onChange: (value){
+                    setState(() {
+                      _isOn = !_isOn;
+                    });
+                  },
+                )
               ],
             ),
           ),
@@ -136,6 +130,10 @@ class _SearchState extends State<Search> {
             //   },
             // ),
             child: GridView.count(
+              padding: const EdgeInsets.all(12.0),
+              childAspectRatio: 1.2,
+              mainAxisSpacing: 16.0,
+              crossAxisSpacing: 16.0,
               crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
               children: List.generate(getFilteredTiles().length, (index) {
                 return tileWid(getFilteredTiles()[index], _isOn);
@@ -146,7 +144,7 @@ class _SearchState extends State<Search> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFF673D80),
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -163,10 +161,10 @@ class _SearchState extends State<Search> {
               hoverColor: Colors.grey[100]!,
               gap: 8,
               activeColor: Colors.black,
-              iconSize: 24,
+              iconSize: 30,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
+              tabBackgroundColor: const Color(0xFFF3D6F5),
               color: Colors.black,
               tabs: [
                 GButton(

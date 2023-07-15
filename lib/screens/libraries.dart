@@ -58,11 +58,12 @@ class _LibrariesState extends State<Libraries> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF130C2E),
       appBar: AppBar(
         title: const Text(
             'Libraries',
           style: TextStyle(
-            color: Colors.black
+            color: Colors.white
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -129,7 +130,7 @@ class _LibrariesState extends State<Libraries> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFF673D80),
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -145,10 +146,10 @@ class _LibrariesState extends State<Libraries> {
               hoverColor: Colors.grey[100]!,
               gap: 8,
               activeColor: Colors.black,
-              iconSize: 24,
+              iconSize: 30,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: const Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
+              tabBackgroundColor: const Color(0xFFF3D6F5),
               color: Colors.black,
               tabs: [
                 GButton(

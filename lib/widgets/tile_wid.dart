@@ -20,6 +20,10 @@ Widget tileWid(tile tile, bool isOn) {
       }
     },
     child: Card(
+      color: const Color(0xFFF3D6F5),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: Transform.scale(
         scale: 1.5,
         child: Image.asset(
