@@ -13,7 +13,7 @@ import 'bottom_bar.dart';
 import 'libraries.dart';
 import 'speech_to_text.dart';
 
-final Bottom controller = Get.put(Bottom());
+final Bottom controller1 = Get.put(Bottom());
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -40,14 +40,38 @@ class _SearchState extends State<Search> {
     return Scaffold(
       backgroundColor: const Color(0xFF130C2E),
       appBar: AppBar(
-        title: const Text(
-            'Search',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF8141033), Color(0xFF8644A9)],
+              stops: [0, 1],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
+          ),
+        ),
+        toolbarHeight: 70,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.image_search, size: 30), // Microphone icon
+            SizedBox(width: 8), // Space between the icon and text
+            Text(
+              'SEARCH',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -165,7 +189,7 @@ class _SearchState extends State<Search> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: const Color(0xFFF3D6F5),
-              color: Colors.black,
+              color: Colors.white,
               tabs: [
                 GButton(
                   icon: LineIcons.home,
@@ -196,11 +220,11 @@ class _SearchState extends State<Search> {
                   },
                 ),
               ],
-              selectedIndex: controller.selectedIndex,
+              selectedIndex: controller1.selectedIndex,
               onTabChange: (index) {
                 setState(() {
                   //_selectedIndex = index;
-                  controller.updateIndex(index);
+                  controller1.updateIndex(index);
                 });
               },
             ),

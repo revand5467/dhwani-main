@@ -1,55 +1,54 @@
-
-import 'package:dhwani/screens/bottom_bar.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:async';
+import 'package:dhwani/screens/bottom_bar.dart';
 
-
-class presplash extends StatefulWidget {
+class PreSplash extends StatefulWidget {
   @override
-  _preSplashState createState() => _preSplashState();
+  _PreSplashState createState() => _PreSplashState();
 }
 
-class _preSplashState extends State<presplash> with TickerProviderStateMixin {
-  late AnimationController controller, cntrlr2;
-  late Animation<double> animation, animatn2;
+class _PreSplashState extends State<PreSplash> with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
 
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    controller = AnimationController(vsync: this, duration: const Duration(seconds: 2));
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
     controller.repeat();
-    startTime();
+
+    startTimer();
   }
 
-  final Tween<double> turnsTween = Tween<double>(begin: 1, end: 0);
-
+  @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
 
+  void startTimer() {
+    Timer(const Duration(seconds: 5), navigateToExample);
+  }
+
+  void navigateToExample() {
+    Get.offAll(() => Example());
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-
-        // ignore: prefer_const_constructors
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[
-                Color(0xff040117),
-                Color(0xdd08092B),
-              ],
-            ),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xff040117), Color(0xdd08092B)],
           ),
-          child: Stack(children: <Widget>[
+        ),
+        child: Stack(
+          children: [
             const Center(
               child: Image(
                 image: AssetImage('assets/into/logo.png'),
@@ -57,7 +56,7 @@ class _preSplashState extends State<presplash> with TickerProviderStateMixin {
             ),
             Center(
               child: RotationTransition(
-                turns: turnsTween.animate(controller),
+                turns: animation,
                 alignment: Alignment.center,
                 child: const Image(
                   image: AssetImage('assets/into/ring2.png'),
@@ -73,17 +72,9 @@ class _preSplashState extends State<presplash> with TickerProviderStateMixin {
                 ),
               ),
             ),
-          ])),
+          ],
+        ),
+      ),
     );
-  }
-
-  startTime() async {
-    var duration = new Duration(seconds: 5);
-    return new Timer(duration, route);
-  }
-
-  route() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Example()));
   }
 }

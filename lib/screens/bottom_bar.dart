@@ -15,32 +15,11 @@ class Example extends StatefulWidget {
   _ExampleState createState() => _ExampleState();
 }
 
-final Bottom controller = Get.put(Bottom());
+final Bottom controller1 = Get.put(Bottom());
 
 
 
 class _ExampleState extends State<Example> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
-  ];
 
   bool _isOn = false;
 
@@ -54,12 +33,6 @@ class _ExampleState extends State<Example> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
-          ),
-        ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -78,7 +51,7 @@ class _ExampleState extends State<Example> {
         title: const Text(
           'QUICK ACCESS',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -184,7 +157,7 @@ class _ExampleState extends State<Example> {
               const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: const Duration(milliseconds: 400),
               tabBackgroundColor: const Color(0xFFF3D6F5),
-              color: Colors.black,
+              color: Colors.white,
               tabs: [
                 GButton(
                   icon: LineIcons.home,
@@ -215,10 +188,10 @@ class _ExampleState extends State<Example> {
                   },
                 ),
               ],
-              selectedIndex: controller.selectedIndex,
+              selectedIndex: controller1.selectedIndex,
               onTabChange: (index) {
                 setState(() {
-                  controller.updateIndex(index);
+                  controller1.updateIndex(index);
                 });
               },
             ),

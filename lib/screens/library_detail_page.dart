@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:provider/provider.dart';
 import 'package:switcher_button/switcher_button.dart';
 
+import '../models/selected_tiles_provider.dart';
 import '../models/tile_model.dart';
 import '../widgets/tile_wid.dart';
 import '../widgets/tile_widg.dart';
@@ -25,8 +27,7 @@ class _LibraryDetailPageState extends State<LibraryDetailPage> {
 
   List<tile> filterTiles(List<tile> tiles) {
     return tiles.where((tile) {
-      return tile.tag.any((tag) =>
-          widget.classification.tags.contains(tag.toLowerCase()));
+      return tile.tag.any((tag) => widget.classification.tags.contains(tag.toLowerCase()));
     }).toList();
   }
 
@@ -37,30 +38,36 @@ class _LibraryDetailPageState extends State<LibraryDetailPage> {
   }
 
   void selectTile(tile selectedTile) {
+    final selectedTilesProvider = context.read<SelectedTilesProvider>();
+
     setState(() {
-      if (selectedTiles.contains(selectedTile)) {
-        selectedTiles.remove(selectedTile);
+      if (selectedTilesProvider.selectedTiles.contains(selectedTile)) {
+        selectedTilesProvider.removeSelectedTile(selectedTile);
         combinedAudioUrls.remove(selectedTile.description);
       } else {
-        selectedTiles.add(selectedTile);
+        selectedTilesProvider.addSelectedTile(selectedTile);
         combinedAudioUrls.add(selectedTile.description);
       }
     });
   }
 
   void deleteLastTile() {
+    final selectedTilesProvider = context.read<SelectedTilesProvider>();
+
     setState(() {
-      if (selectedTiles.isNotEmpty) {
-        final lastTile = selectedTiles.last;
-        selectedTiles.remove(lastTile);
+      if (selectedTilesProvider.selectedTiles.isNotEmpty) {
+        final lastTile = selectedTilesProvider.selectedTiles.last;
+        selectedTilesProvider.removeSelectedTile(lastTile);
         combinedAudioUrls.remove(lastTile.description);
       }
     });
   }
 
   void clearSelection() {
+    final selectedTilesProvider = context.read<SelectedTilesProvider>();
+
     setState(() {
-      selectedTiles.clear();
+      selectedTilesProvider.clearSelectedTiles();
       combinedAudioUrls.clear();
     });
   }
@@ -68,7 +75,9 @@ class _LibraryDetailPageState extends State<LibraryDetailPage> {
   FlutterTts ftts = FlutterTts();
 
   Future<void> playCombinedAudio() async {
-    combinedAudioUrls = selectedTiles.map((tile) => tile.description).toList();
+    final selectedTilesProvider = context.read<SelectedTilesProvider>();
+    combinedAudioUrls = selectedTilesProvider.selectedTiles.map((tile) => tile.description).toList();
+
     await ftts.setSpeechRate(0.5); // Set the speed of speech
     await ftts.setVolume(1.0); // Set the volume of speech
     await ftts.setPitch(1);
@@ -107,6 +116,7 @@ class _LibraryDetailPageState extends State<LibraryDetailPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 10),
             GestureDetector(
               onTap: playCombinedAudio,
               child: Container(
@@ -121,13 +131,13 @@ class _LibraryDetailPageState extends State<LibraryDetailPage> {
                         child: Row(
                           children: [
                             SizedBox(width: 8.0), // Add spacing between backspace and tiles
-                            ...selectedTiles.map<Widget>((tile) {
+                            ...context.watch<SelectedTilesProvider>().selectedTiles.map<Widget>((tile){
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Image.asset(
                                   tile.image,
-                                  width: 48,
-                                  height: 48,
+                                  width: 70,
+                                  height: 70,
                                 ),
                               );
                             }).toList(),
@@ -176,7 +186,7 @@ class _LibraryDetailPageState extends State<LibraryDetailPage> {
                 crossAxisCount: 2,
                 children: filteredTiles.map<Widget>((tile) {
                   return tileWidg(
-                    selected: selectedTiles.contains(tile),
+                    selected: context.watch<SelectedTilesProvider>().selectedTiles.contains(tile),
                     isOn: _isOn,
                     tile: tile,
                     onSelect: (selected) {

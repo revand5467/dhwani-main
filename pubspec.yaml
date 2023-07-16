@@ -51,6 +51,7 @@ dependencies:
   flutter_translate: ^4.0.3
   string_similarity: ^2.0.0
   switcher_button: ^0.0.4
+  provider: ^6.0.1
 
   translator: ^0.1.7
 

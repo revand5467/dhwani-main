@@ -1,5 +1,4 @@
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:dhwani/screens/speech_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:highlight_text/highlight_text.dart';
@@ -18,7 +17,7 @@ import '../models/tile_model.dart';
 import '../widgets/tile_wid.dart';
 import 'libraries.dart';
 
-final Bottom controller = Get.put(Bottom());
+final Bottom controller1 = Get.put(Bottom());
 
 class Speech extends StatefulWidget {
   @override
@@ -26,27 +25,6 @@ class Speech extends StatefulWidget {
 }
 
 class _SpeechState extends State<Speech> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
-  ];
 
   String _text = 'Press the Button and Start Speaking';
   GoogleTranslator translator = GoogleTranslator();
@@ -103,7 +81,6 @@ class _SpeechState extends State<Speech> {
 
   late stt.SpeechToText _speech;
   bool _isListening = false;
-
   double _confidence = 1.0;
   List<tile> searchResults = [];
 
@@ -118,37 +95,62 @@ class _SpeechState extends State<Speech> {
     if (_text.isNotEmpty) {
       final String query = _text.toLowerCase();
       searchResults = demo.where((tile) {
-        return tile.tag.any((tag) =>
-        StringSimilarity.compareTwoStrings(tag.toLowerCase(), query) > 0.5);
+        return tile.tag.any((tag) => query.toLowerCase().contains(tag.toLowerCase()));
       }).toList();
     }
-    setState(() {
-      isLoading = false;
-    });
+
+    if(searchResults.isEmpty) {
+      setState(() {
+        isLoading = false;
+      });
+    }
     return searchResults;
-
   }
-
-
   bool _isOn = false;
-  bool isLoading = false;
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF130C2E),
       appBar: AppBar(
-        title: const Text(
-          'Voice Assist',
-          style: TextStyle(fontSize: 22, color: Colors.white),
-        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF8141033), Color(0xFF8644A9)],
+              stops: [0, 1],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
+          ),
+        ),
+        toolbarHeight: 70,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.mic, size: 30), // Microphone icon
+            SizedBox(width: 8), // Space between the icon and text
+            Text(
+              'VOICE ASSIST',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
         animate: _isListening,
-        glowColor: Theme.of(context).primaryColor,
+        glowColor: const Color(0xFFF3D6F5),
         endRadius: 75.0,
         duration: const Duration(milliseconds: 2000),
         repeatPauseDuration: const Duration(milliseconds: 100),
@@ -160,42 +162,43 @@ class _SpeechState extends State<Speech> {
       ),
       body: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            child: TextHighlight(
-              text: _text,
-              words: _highlights,
-              textStyle: const TextStyle(
-                fontSize: 25.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text(
-                        'MALAYALAM',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(width: 10.0),
-                      SwitcherButton(
-                        onChange: (value){
-                          setState(() {
-                            _isOn = !_isOn;
-                          });
-                        },
-                      )
-                    ],
+          // Container(
+          //   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          //   child: TextHighlight(
+          //     text: _text,
+          //     words: _highlights,
+          //     textStyle: const TextStyle(
+          //       fontSize: 25.0,
+          //       color: Colors.white,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //   ),
+          // ),
+          const SizedBox( height: 10),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  'MALAYALAM',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(width: 10.0),
+                SwitcherButton(
+                  onChange: (value){
+                    setState(() {
+                      _isOn = !_isOn;
+                    });
+                  },
+                )
+              ],
+            ),
+          ),
 
           Expanded(
             child: Stack(
@@ -210,12 +213,12 @@ class _SpeechState extends State<Speech> {
                   const Center(
                     child: CircularProgressIndicator(),
                   ),
-                if (searchResults.isEmpty && !isLoading)
+                if (!isLoading && searchResults.isEmpty)
                   const Center(
                     child: Padding(
                       padding: EdgeInsets.all(20.0),
                       child: Text(
-                        'No Matches Found.',
+                        'No Matches Found. Speak!!',
                         style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
@@ -248,7 +251,7 @@ class _SpeechState extends State<Speech> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: const Color(0xFFF3D6F5),
-              color: Colors.black,
+              color: Colors.white,
               tabs: [
                 GButton(
                   icon: LineIcons.home,
@@ -279,11 +282,10 @@ class _SpeechState extends State<Speech> {
                   },
                 ),
               ],
-              selectedIndex: controller.selectedIndex,
+              selectedIndex: controller1.selectedIndex,
               onTabChange: (index) {
                 setState(() {
-                  //_selectedIndex = index;
-                  controller.updateIndex(index);
+                  controller1.updateIndex(index);
                 });
               },
             ),
@@ -300,18 +302,17 @@ class _SpeechState extends State<Speech> {
         onError: (val) => print('onError: $val'),
       );
       if (available) {
-        setState(() =>{
-          _isListening = true,
-        _text = 'Listening.....',
-          isLoading = true,
+        setState(() {
+          _isListening = true;
+          _text = 'Listening...';
+          isLoading = true;// Reset the flag before starting to listen
         });
         _speech.listen(
           localeId: 'ml_IN',
           onResult: (val) => setState(() {
-            // _text = val.recognizedWords;
             lang = val.recognizedWords;
             print(lang);
-            trans(); //calling the function to translate the text
+            trans();
             if (val.hasConfidenceRating && val.confidence > 0) {
               _confidence = val.confidence;
             }
@@ -319,11 +320,15 @@ class _SpeechState extends State<Speech> {
         );
       }
     } else {
-      setState(() => _isListening = false);
+      setState(() {
+        _isListening = false;
+        isLoading = false;
+      });
       _text = 'Press the Button and Start Speaking';
       _speech.stop();
     }
   }
+
 
 
 }
