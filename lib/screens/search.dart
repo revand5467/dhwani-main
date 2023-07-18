@@ -30,10 +30,15 @@ class _SearchState extends State<Search> {
 
   List<tile> getFilteredTiles() {
     return tiles
-        .where((tile) => tile.name.toLowerCase().contains(searchValue.toLowerCase()) ||
-        tile.tag.any((tag) => StringSimilarity.compareTwoStrings(tag.toLowerCase(), searchValue) > 0.5))
+        .where((tile) =>
+            tile.name.toLowerCase().contains(searchValue.toLowerCase()) ||
+            tile.tag.any((tag) =>
+                StringSimilarity.compareTwoStrings(
+                    tag.toLowerCase(), searchValue) >
+                0.5))
         .toList();
   }
+
   bool _isOn = false;
   @override
   Widget build(BuildContext context) {
@@ -57,15 +62,15 @@ class _SearchState extends State<Search> {
           ),
         ),
         toolbarHeight: 70,
-        title:  Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.image_search, size: 30), // Microphone icon
+            Icon(Icons.image_search, size: 28), // Microphone icon
             SizedBox(width: 8), // Space between the icon and text
             Text(
               'SEARCH',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -93,14 +98,14 @@ class _SearchState extends State<Search> {
                       ),
                       prefixIcon: const Icon(Icons.search),
                       filled: true,
-                      fillColor: const Color(0xFFF3D6F5), // Set the background color
+                      fillColor:
+                          const Color(0xFFF3D6F5), // Set the background color
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide.none, // Remove the border
                       ),
                     ),
                   ),
-
                 ),
               ],
             ),
@@ -119,13 +124,15 @@ class _SearchState extends State<Search> {
                   ),
                 ),
                 const SizedBox(width: 10.0),
-                SwitcherButton(
-                  onChange: (value){
-                    setState(() {
-                      _isOn = !_isOn;
-                    });
-                  },
-                )
+                       Obx(() => SwitcherButton(
+                      // Use Obx to make the widget reactive
+                      value: controller1.isOn.value,
+                      onChange: (value) {
+                        controller1.isOn.value = !controller1.isOn.value;
+                        Get.to(() => Example());
+                        print(controller1.isOn.value);
+                      },
+                    )),
               ],
             ),
           ),
@@ -178,14 +185,13 @@ class _SearchState extends State<Search> {
         ),
         child: SafeArea(
           child: Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
               rippleColor: Colors.grey[300]!,
               hoverColor: Colors.grey[100]!,
               gap: 8,
               activeColor: Colors.black,
-              iconSize: 30,
+              iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: const Color(0xFFF3D6F5),
@@ -200,7 +206,7 @@ class _SearchState extends State<Search> {
                 ),
                 GButton(
                   onPressed: () {
-                    Get.offAll(() =>  Libraries());
+                    Get.offAll(() => Libraries());
                   },
                   icon: LineIcons.book,
                   text: 'Libraries',
@@ -222,10 +228,9 @@ class _SearchState extends State<Search> {
               ],
               selectedIndex: controller1.selectedIndex,
               onTabChange: (index) {
-                setState(() {
-                  //_selectedIndex = index;
-                  controller1.updateIndex(index);
-                });
+                //_selectedIndex = index;
+                controller1.updateIndex(index);
+                ;
               },
             ),
           ),

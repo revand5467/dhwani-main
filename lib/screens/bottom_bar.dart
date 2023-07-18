@@ -1,9 +1,12 @@
+import 'package:dhwani/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:switcher_button/switcher_button.dart';
 
+import '../controller/login_controller.dart';
 import '../widgets/tile_widget.dart';
 import '../controller/bottom_bar.dart';
 import 'libraries.dart';
@@ -17,15 +20,21 @@ class Example extends StatefulWidget {
   _ExampleState createState() => _ExampleState();
 }
 
-
 class _ExampleState extends State<Example> {
-
-  bool _isOn = false;
+  // bool _isOn = false;
+  var val = false;
+  Future<void> delShared() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', false);
+    val = false;
+    // return prefs.getBool('isLoggedIn') ?? false;
+  }
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: const Color(0xFF130C2E),
@@ -86,7 +95,11 @@ class _ExampleState extends State<Example> {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
-              onTap: () {},
+              onTap: () {
+                controller.logout();
+                delShared();
+                Get.offAll(() => login());
+              },
             ),
           ],
         ),
@@ -108,13 +121,15 @@ class _ExampleState extends State<Example> {
                   ),
                 ),
                 const SizedBox(width: 10.0),
-                SwitcherButton(
-                  onChange: (value) {
-                    setState(() {
-                      _isOn = !_isOn;
-                    });
-                  },
-                ),
+                Obx(() => SwitcherButton(
+                      // Use Obx to make the widget reactive
+                      value: controller1.isOn.value,
+                      onChange: (value) {
+                        controller1.isOn.value = !controller1.isOn.value;
+                        Get.to(() => Example());
+                        print(controller1.isOn.value);
+                      },
+                    )),
               ],
             ),
           ),
@@ -126,7 +141,7 @@ class _ExampleState extends State<Example> {
               crossAxisSpacing: 16.0,
               crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
               children: List.generate(8, (index) {
-                return tileWidget(index, _isOn);
+                return tileWidget(index, controller1.isOn.value);
               }),
             ),
           ),
@@ -144,16 +159,14 @@ class _ExampleState extends State<Example> {
         ),
         child: SafeArea(
           child: Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
               rippleColor: Colors.grey[300]!,
               hoverColor: Colors.grey[100]!,
               gap: 8,
               activeColor: Colors.black,
-              iconSize: 30,
-              padding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              iconSize: 22,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: const Duration(milliseconds: 400),
               tabBackgroundColor: const Color(0xFFF3D6F5),
               color: Colors.white,
@@ -189,9 +202,8 @@ class _ExampleState extends State<Example> {
               ],
               selectedIndex: controller1.selectedIndex,
               onTabChange: (index) {
-                setState(() {
-                  controller1.updateIndex(index);
-                });
+                controller1.updateIndex(index);
+                print(controller1.selectedIndex);
               },
             ),
           ),

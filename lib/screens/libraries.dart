@@ -19,7 +19,8 @@ class Classification {
   final List<String> tags;
   final String imagePath;
 
-  Classification({required this.name, required this.tags, required this.imagePath});
+  Classification(
+      {required this.name, required this.tags, required this.imagePath});
 }
 
 class Libraries extends StatefulWidget {
@@ -29,18 +30,42 @@ class Libraries extends StatefulWidget {
 
 class _LibrariesState extends State<Libraries> {
   List<Classification> classifications = [
-    Classification(name: 'Food', tags: ['food'], imagePath: 'assets/into/food.jpg'),
-    Classification(name: 'Drink', tags: ['drink'], imagePath: 'assets/into/drink.jpg'),
-    Classification(name: 'Washroom', tags: ['toilet'], imagePath: 'assets/into/washroom.jpg'),
-    Classification(name: 'School', tags: ['school'], imagePath: 'assets/into/school.png'),
-    Classification(name: 'Objects', tags: ['object'], imagePath: 'assets/into/object.jpg'),
-    Classification(name: 'Animals', tags: ['animal'], imagePath: 'assets/into/animals.jpg'),
-    Classification(name: 'Alphabets', tags: ['alphabet'], imagePath: 'assets/into/alphabets.jpg'),
-    Classification(name: 'Numbers', tags: ['numbers'], imagePath: 'assets/into/numbers.jpg'),
-    Classification(name: 'Hobbies', tags: ['hobbies'], imagePath: 'assets/into/hobbies.png'),
-    Classification(name: 'Body Parts', tags: ['body'], imagePath: 'assets/into/body.jpg'),
-    Classification(name: 'Pronouns/Verbs', tags: ['prbs'], imagePath: 'assets/into/pro.jpg'),
-    Classification(name: 'Greetings', tags: ['greet'], imagePath: 'assets/into/greet.png'),
+    Classification(
+        name: 'Food', tags: ['food'], imagePath: 'assets/into/food.jpg'),
+    Classification(
+        name: 'Drink', tags: ['drink'], imagePath: 'assets/into/drink.jpg'),
+    Classification(
+        name: 'Washroom',
+        tags: ['toilet'],
+        imagePath: 'assets/into/washroom.jpg'),
+    Classification(
+        name: 'School', tags: ['school'], imagePath: 'assets/into/school.png'),
+    Classification(
+        name: 'Objects', tags: ['object'], imagePath: 'assets/into/object.jpg'),
+    Classification(
+        name: 'Animals',
+        tags: ['animal'],
+        imagePath: 'assets/into/animals.jpg'),
+    Classification(
+        name: 'Alphabets',
+        tags: ['alphabet'],
+        imagePath: 'assets/into/alphabets.jpg'),
+    Classification(
+        name: 'Numbers',
+        tags: ['numbers'],
+        imagePath: 'assets/into/numbers.jpg'),
+    Classification(
+        name: 'Hobbies',
+        tags: ['hobbies'],
+        imagePath: 'assets/into/hobbies.png'),
+    Classification(
+        name: 'Body Parts', tags: ['body'], imagePath: 'assets/into/body.jpg'),
+    Classification(
+        name: 'Pronouns/Verbs',
+        tags: ['prbs'],
+        imagePath: 'assets/into/pro.jpg'),
+    Classification(
+        name: 'Greetings', tags: ['greet'], imagePath: 'assets/into/greet.png'),
   ];
 
   @override
@@ -126,7 +151,10 @@ class _LibrariesState extends State<Libraries> {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Colors.black.withOpacity(0.5), Colors.black.withOpacity(0.8)],
+                          colors: [
+                            Colors.black.withOpacity(0.5),
+                            Colors.black.withOpacity(0.8)
+                          ],
                         ),
                       ),
                       child: Center(
@@ -158,14 +186,16 @@ class _LibrariesState extends State<Libraries> {
           ),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
               child: GNav(
                 rippleColor: Colors.grey[300]!,
                 hoverColor: Colors.grey[100]!,
                 gap: 8,
                 activeColor: Colors.black,
-                iconSize: 30,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                iconSize: 24,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 duration: const Duration(milliseconds: 400),
                 tabBackgroundColor: const Color(0xFFF3D6F5),
                 color: Colors.white,
@@ -201,9 +231,9 @@ class _LibrariesState extends State<Libraries> {
                 ],
                 selectedIndex: controller1.selectedIndex,
                 onTabChange: (index) {
-                  setState(() {
-                    controller1.updateIndex(index);
-                  });
+                  print(controller1.selectedIndex);
+                  controller1.updateIndex(index);
+                  print(controller1.selectedIndex);
                 },
               ),
             ),

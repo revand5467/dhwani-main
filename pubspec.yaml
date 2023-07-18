@@ -52,7 +52,7 @@ dependencies:
   string_similarity: ^2.0.0
   switcher_button: ^0.0.4
   provider: ^6.0.1
-
+  shared_preference: ^2.0.8
   translator: ^0.1.7
 
 dev_dependencies:

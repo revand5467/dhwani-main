@@ -25,7 +25,6 @@ class Speech extends StatefulWidget {
 }
 
 class _SpeechState extends State<Speech> {
-
   String _text = '';
   GoogleTranslator translator = GoogleTranslator();
   var lang = "";
@@ -176,7 +175,7 @@ class _SpeechState extends State<Speech> {
               ),
             ),
           ),
-          const SizedBox( height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -191,17 +190,18 @@ class _SpeechState extends State<Speech> {
                   ),
                 ),
                 const SizedBox(width: 10.0),
-                SwitcherButton(
-                  onChange: (value) {
-                    setState(() {
-                      _isOn = !_isOn;
-                    });
-                  },
-                )
+                Obx(() => SwitcherButton(
+                      // Use Obx to make the widget reactive
+                      value: controller1.isOn.value,
+                      onChange: (value) {
+                        controller1.isOn.value = !controller1.isOn.value;
+                        Get.to(() => Example());
+                        print(controller1.isOn.value);
+                      },
+                    )),
               ],
             ),
           ),
-
           Expanded(
             child: Stack(
               children: [
@@ -250,9 +250,9 @@ class _SpeechState extends State<Speech> {
             child: GNav(
               rippleColor: Colors.grey[300]!,
               hoverColor: Colors.grey[100]!,
-              gap: 8,
+              gap: 7,
               activeColor: Colors.black,
-              iconSize: 30,
+              iconSize: 22,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: const Color(0xFFF3D6F5),
@@ -289,9 +289,8 @@ class _SpeechState extends State<Speech> {
               ],
               selectedIndex: controller1.selectedIndex,
               onTabChange: (index) {
-                setState(() {
-                  controller1.updateIndex(index);
-                });
+                controller1.updateIndex(index);
+                ;
               },
             ),
           ),
