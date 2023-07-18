@@ -1,4 +1,5 @@
-import 'package:dhwani/SplashScreen/splashscreen.dart';
+import 'package:dhwani/SplashScreen/splash.dart';
+
 import 'package:dhwani/screens/bottom_bar.dart';
 import 'package:dhwani/screens/login_screen.dart';
 import 'package:dhwani/screens/search.dart';
@@ -24,15 +25,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SelectedTilesProvider()),
       ],
       child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            fontFamily: 'ArchivoBlack',
-            primarySwatch: Colors.blue,
-          ),
-          home: login()
-          // Example(),
-          //  home: Search(),
-          ),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'ArchivoBlack',
+          primarySwatch: Colors.blue,
+        ),
+        home: SplashScreen(),
+      ),
     );
   }
 }

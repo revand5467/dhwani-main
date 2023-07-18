@@ -29,9 +29,18 @@ class Libraries extends StatefulWidget {
 
 class _LibrariesState extends State<Libraries> {
   List<Classification> classifications = [
-    Classification(name: 'Food', tags: ['food'], imagePath: 'assets/PNG/food.jpg'),
-    Classification(name: 'Sleep', tags: ['sleep'], imagePath: 'assets/PNG/sleep.jpg'),
-    // Add more classifications here
+    Classification(name: 'Food', tags: ['food'], imagePath: 'assets/into/food.jpg'),
+    Classification(name: 'Drink', tags: ['drink'], imagePath: 'assets/into/drink.jpg'),
+    Classification(name: 'Washroom', tags: ['toilet'], imagePath: 'assets/into/washroom.jpg'),
+    Classification(name: 'School', tags: ['school'], imagePath: 'assets/into/school.png'),
+    Classification(name: 'Objects', tags: ['object'], imagePath: 'assets/into/object.jpg'),
+    Classification(name: 'Animals', tags: ['animal'], imagePath: 'assets/into/animals.jpg'),
+    Classification(name: 'Alphabets', tags: ['alphabet'], imagePath: 'assets/into/alphabets.jpg'),
+    Classification(name: 'Numbers', tags: ['numbers'], imagePath: 'assets/into/numbers.jpg'),
+    Classification(name: 'Hobbies', tags: ['hobbies'], imagePath: 'assets/into/hobbies.png'),
+    Classification(name: 'Body Parts', tags: ['body'], imagePath: 'assets/into/body.jpg'),
+    Classification(name: 'Pronouns/Verbs', tags: ['prbs'], imagePath: 'assets/into/pro.jpg'),
+    Classification(name: 'Greetings', tags: ['greet'], imagePath: 'assets/into/greet.png'),
   ];
 
   @override
@@ -184,7 +193,7 @@ class _LibrariesState extends State<Libraries> {
                   ),
                   GButton(
                     icon: LineIcons.microphone,
-                    text: 'Speak',
+                    text: 'Voice',
                     onPressed: () {
                       Get.offAll(() => Speech());
                     },

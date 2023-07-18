@@ -25,7 +25,8 @@ class Speech extends StatefulWidget {
 }
 
 class _SpeechState extends State<Speech> {
-  String _text = 'Press the Button and Start Speaking';
+
+  String _text = '';
   GoogleTranslator translator = GoogleTranslator();
   var lang = "";
   void trans() async {
@@ -163,19 +164,19 @@ class _SpeechState extends State<Speech> {
       ),
       body: Column(
         children: [
-          // Container(
-          //   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          //   child: TextHighlight(
-          //     text: _text,
-          //     words: _highlights,
-          //     textStyle: const TextStyle(
-          //       fontSize: 25.0,
-          //       color: Colors.white,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //   ),
-          // ),
-          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            child: TextHighlight(
+              text: _text,
+              words: _highlights,
+              textStyle: const TextStyle(
+                fontSize: 25.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox( height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -280,7 +281,7 @@ class _SpeechState extends State<Speech> {
                 ),
                 GButton(
                   icon: LineIcons.microphone,
-                  text: 'Speak',
+                  text: 'Voice',
                   onPressed: () {
                     Get.offAll(() => Speech());
                   },
@@ -328,7 +329,7 @@ class _SpeechState extends State<Speech> {
         _isListening = false;
         isLoading = false;
       });
-      _text = 'Press the Button and Start Speaking';
+      _text = '';
       _speech.stop();
     }
   }
