@@ -92,15 +92,32 @@ class _LibraryDetailPageState extends State<LibraryDetailPage> {
     return Scaffold(
       backgroundColor: const Color(0xFF130C2E),
       appBar: AppBar(
-        title: Text(
-          widget.classification.name,
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF8141033), Color(0xFF8644A9)],
+              stops: [0, 1],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
+          ),
+        ),
+        toolbarHeight: 70,
+        title:
+            Text(
+              widget.classification.name,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -184,6 +201,9 @@ class _LibraryDetailPageState extends State<LibraryDetailPage> {
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
+                childAspectRatio: 1.2,
+                mainAxisSpacing: 16.0,
+                crossAxisSpacing: 16.0,
                 children: filteredTiles.map<Widget>((tile) {
                   return tileWidg(
                     selected: context.watch<SelectedTilesProvider>().selectedTiles.contains(tile),

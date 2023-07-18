@@ -214,7 +214,7 @@ class _SearchState extends State<Search> {
                 ),
                 GButton(
                   icon: LineIcons.microphone,
-                  text: 'Speak',
+                  text: 'Voice',
                   onPressed: () {
                     Get.offAll(() => Speech());
                   },

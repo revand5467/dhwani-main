@@ -1,4 +1,5 @@
-import 'package:dhwani/SplashScreen/splashscreen.dart';
+import 'package:dhwani/SplashScreen/splash.dart';
+
 import 'package:dhwani/screens/bottom_bar.dart';
 import 'package:dhwani/screens/search.dart';
 import 'package:dhwani/screens/speech_to_text.dart';
@@ -28,8 +29,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'ArchivoBlack',
           primarySwatch: Colors.blue,
         ),
-        home: Example(),
-        //  home: Search(),
+        home: SplashScreen(),
       ),
     );
   }

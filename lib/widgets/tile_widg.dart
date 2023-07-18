@@ -33,9 +33,10 @@ Widget tileWidg({
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Transform.scale(
-        scale: 1.5,
+        scale: 1.0,
         child: Image.asset(
           tile.image,
+          fit: BoxFit.contain,
           // color: Colors.black,
           // semanticsLabel: tile.description
         ),

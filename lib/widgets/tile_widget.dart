@@ -39,8 +39,9 @@ Widget tileWidget(int index, bool isOn) {
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Transform.scale(
-        scale: 1.5,
+        scale: 1.0,
         child: Image.asset(demo[index].image,
+          fit: BoxFit.contain,
           // color: Colors.black,
           //semanticsLabel: demo[index].description
           ),

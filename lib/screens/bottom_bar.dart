@@ -10,13 +10,12 @@ import 'libraries.dart';
 import 'search.dart';
 import 'speech_to_text.dart';
 
+final Bottom controller1 = Get.put(Bottom());
+
 class Example extends StatefulWidget {
   @override
   _ExampleState createState() => _ExampleState();
 }
-
-final Bottom controller1 = Get.put(Bottom());
-
 
 
 class _ExampleState extends State<Example> {
@@ -182,7 +181,7 @@ class _ExampleState extends State<Example> {
                 ),
                 GButton(
                   icon: LineIcons.microphone,
-                  text: 'Speak',
+                  text: 'Voice',
                   onPressed: () {
                     Get.offAll(() => Speech());
                   },
