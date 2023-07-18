@@ -57,7 +57,7 @@ class _SearchState extends State<Search> {
           ),
         ),
         toolbarHeight: 70,
-        title: const Row(
+        title:  Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.image_search, size: 30), // Microphone icon

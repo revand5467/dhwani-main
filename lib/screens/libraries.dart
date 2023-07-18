@@ -62,7 +62,7 @@ class _LibrariesState extends State<Libraries> {
             ),
           ),
           toolbarHeight: 70,
-          title: const Row(
+          title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.library_books_outlined, size: 30), // Microphone icon
